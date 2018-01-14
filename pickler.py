@@ -3,7 +3,7 @@ from pathlib import Path
 from errno import ENOENT
 import os
 
-def get_or_create_pickle(file, force = False):
+def get_or_create_pickle(file):
     # Get pickle from csv file name.
     # PS: We can manually force a re-pickling if file changed
 
@@ -11,7 +11,7 @@ def get_or_create_pickle(file, force = False):
     file_pickle = file + '.p'
     path_pickle = 'dataset/' + file_pickle
 
-    if Path('dataset/' + file_pickle).is_file() and not(force):
+    if Path('dataset/' + file_pickle).is_file():
         print('The file *** ' + file + ' *** is already pickled')
     else:
         print('Read csv file : ' + file)

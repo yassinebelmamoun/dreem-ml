@@ -4,23 +4,16 @@ import numpy
 import pandas as pd
 
 def predicter(model, df):
-    X_cols = list(df.columns.values)
-    try:
-        X_cols.remove('power_increase')
-    except:
-        print('This is not a training set!')
-        pass
-
     # Predict from model
-    X = df[X_cols]
+    if 'power_increase' in df.columns:
+        X = df.drop(columns=['power_increase'])
+    else:
+        X = df
     y_predicted = model.predict(X)
 
     # Measure error if possible
-    try:
-        y_true = df[['power_increase']].as_matrix()
-        print('MSE: ', mean_squared_error(y_predicted, y_true))
-    except:
-        print('Unpredictable')
+    if 'power_increase' in df.columns:
+        print('MSE: ', mean_squared_error(y_predicted, df['power_increase']))
 
     # numpy.savetxt("foo.csv", y_predicted, delimiter=",")
     df_predicted = pd.DataFrame(y_predicted)
